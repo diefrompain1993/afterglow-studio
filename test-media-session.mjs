@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {requestPlaybackSession,attachMediaSession} from './public/media-session.js';
+const handlers={};let pos,playCount=0,pauseCount=0,target;
+const nav={audioSession:{type:'ambient'},mediaSession:{setActionHandler:(k,v)=>handlers[k]=v,setPositionState:s=>pos=s}};
+assert.equal(requestPlaybackSession(nav),true);assert.equal(nav.audioSession.type,'playback');assert.equal(requestPlaybackSession({}),false);
+assert.equal(requestPlaybackSession({get audioSession(){throw Error('unsupported');}}),false);
+const state={title:'Track',start:10,end:30,speed:.25,position:15,playing:true};
+const media=attachMediaSession({getState:()=>state,play:()=>playCount++,pause:()=>pauseCount++,seek:s=>target=s},nav);
+media.update(true);assert.deepEqual(pos,{duration:80,position:20,playbackRate:1});
+handlers.seekto({seekTime:40});assert.equal(target,20);
+handlers.seekforward({seekOffset:10});assert.equal(target,17.5);
+handlers.seekbackward({seekOffset:10});assert.equal(target,12.5);
+handlers.play();assert.equal(playCount,1);handlers.pause();assert.equal(pauseCount,1);
+state.speed=2;media.update(true);assert.equal(pos.duration,10);assert.equal(pos.position,2.5);
+media.clear();assert.equal(handlers.play,null);assert.equal(nav.mediaSession.playbackState,'none');
+attachMediaSession({getState:()=>state},{}).update();
+console.log('PASS: direct playback session; unsupported API fallback; media timeline at 0.25x and 2x; play/pause/seek; cleanup.');

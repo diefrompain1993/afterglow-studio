@@ -1,3 +1,4 @@
+import {requestPlaybackSession} from './media-session.js?v=7';
 import {NativeTransport} from './native-transport.js';
 import {impulse,mix,bassStage} from './audio-effects.js';
 export class LiveEngine {
@@ -31,7 +32,7 @@ export class LiveEngine {
     for(const old of this.wetNodes){old.gain.gain.setTargetAtTime(0,c.currentTime,.03);setTimeout(()=>{this.bass.disconnect(old.conv);old.conv.disconnect();old.gain.disconnect();},200);}
     this.wetNodes=[{conv,gain}];
   }
-  async play(){await this.context.resume();this.playing=true;if(this.linked)this.native.play();else this.node.port.postMessage({type:'play'});}
+  async play(){requestPlaybackSession();await this.context.resume();this.playing=true;if(this.linked)this.native.play();else this.node.port.postMessage({type:'play'});}
   pause(){if(this.node)this.node.port.postMessage({type:'pause'});this.native?.pause();this.playing=false;}
   seek(seconds){this.position=seconds;if(this.linked)this.native.seek(seconds);else this.node.port.postMessage({type:'seek',seconds});}
   loop(value){this.node.port.postMessage({type:'loop',value});this.native.loop(value);}
