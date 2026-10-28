@@ -9,7 +9,7 @@ let current=null,buffer=null,items=[],busy=false,previewBuffer=null,previewKey='
 function position(){return live?.linked?live.native.current():live?.position||0;}
 function seek(seconds){live?.seek(seconds);mediaSession.update(true);}
 const mediaSession=attachMediaSession({
- getState:()=>current&&buffer?{title:current.title,playing:!!live?.playing,position:position(),...getSettings()}:null,
+ getState:()=>current&&buffer&&live?.native?{...live.native.s,title:current.title,playing:!!live.playing,position:position()}:null,
  play:()=>{if(!live?.playing)$('play').click();},pause:()=>{live?.pause();playbackUI();},seek
 });
 // Never stop audio on visibilitychange: Safari owns the playback audio session.
