@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {NativeTransport} from './public/native-transport.js';
+const parameter=()=>({value:0,setTargetAtTime(value){this.value=value;},cancelScheduledValues(){}});
+const sources=[];const c={currentTime:0,createGain(){return {gain:parameter(),connect(){},disconnect(){}};},createBufferSource(){const s={playbackRate:parameter(),connect(){},disconnect(){},start(...args){this.started=args;},stop(){}};sources.push(s);return s;}};
+const player=new NativeTransport(c,{},()=>{});
+player.load({duration:12});player.settings({speed:.25,start:0,end:12});player.play();
+assert.equal(sources.at(-1).playbackRate.value,.25);c.currentTime=8;assert.equal(player.current(),2);
+const source=sources.at(-1);player.settings({speed:.5});assert.equal(sources.at(-1),source,'changing speed must not restart native source');c.currentTime=10;assert.equal(player.current(),3);
+player.seek(7);assert.equal(player.current(),7);assert.equal(sources.at(-1).started[1],7);c.currentTime=12;assert.equal(player.current(),8);
+player.pause();c.currentTime=20;assert.equal(player.current(),8);assert.equal(player.playing,false);
+player.settings({speed:1,start:2,end:4});player.loop(true);player.play();c.currentTime=23;assert.equal(player.current(),3);
+player.pause();clearInterval(player.timer);
+console.log('PASS: native 0.25x; smooth speed changes reuse source; seek; pause; trim; loop.');
