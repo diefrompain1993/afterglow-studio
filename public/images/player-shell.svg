@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 160" preserveAspectRatio="none">
+<defs>
+ <linearGradient id="metal" x2="0.2" y2="1"><stop stop-color="#d5c7de"/><stop offset=".07" stop-color="#69616f"/><stop offset=".22" stop-color="#312b39"/><stop offset=".52" stop-color="#59505f"/><stop offset=".76" stop-color="#201a29"/><stop offset=".94" stop-color="#85778f"/><stop offset="1" stop-color="#34283f"/></linearGradient>
+ <linearGradient id="edge" x2="0" y2="1"><stop stop-color="#e7dbed"/><stop offset=".4" stop-color="#665473"/><stop offset=".75" stop-color="#18121f"/><stop offset="1" stop-color="#ab94bb"/></linearGradient>
+ <linearGradient id="fin"><stop stop-color="#22152f"/><stop offset=".4" stop-color="#a15ad2"/><stop offset=".65" stop-color="#ebcaff"/><stop offset="1" stop-color="#44205d"/></linearGradient>
+</defs>
+<!-- Asymmetric wing, circular drive housing and a stepped transport apron. -->
+<path d="M100 14 L518 14 Q530 14 538 7 L551 3 L580 3 Q594 3 594 19 L594 78 Q598 96 582 104 L555 113 L543 139 Q539 151 525 151 L344 151 L324 135 L105 135 Q87 157 61 156 Q9 155 3 105 Q-2 75 19 55 Q31 43 48 42 L62 25 Q72 14 100 14Z" fill="url(#metal)" stroke="#100b16" stroke-width="5"/>
+<path d="M100 14 L518 14 Q530 14 538 7 L551 3 L580 3 Q594 3 594 19 L594 78 Q598 96 582 104 L555 113 L543 139 Q539 151 525 151 L344 151 L324 135 L105 135 Q87 157 61 156 Q9 155 3 105 Q-2 75 19 55 Q31 43 48 42 L62 25 Q72 14 100 14Z" fill="none" stroke="url(#edge)" stroke-width="2"/>
+<path d="M83 27 Q91 22 108 22 H516 M110 128 H322 L344 144 H524 Q533 144 536 135 L549 108" fill="none" stroke="#c2aacd" stroke-opacity=".55"/>
+<path d="M547 21 L579 13 L583 64 L573 89 L559 96Z" fill="url(#fin)" stroke="#160c20" stroke-width="3"/>
+<path d="M557 27 L575 22 L578 61 L570 79" fill="none" stroke="#ead6ff" stroke-opacity=".5"/>
+<path d="M104 38 Q84 35 77 49 M98 119 Q84 142 61 144 Q21 142 14 107" fill="none" stroke="#a89ab5" stroke-opacity=".6" stroke-width="2"/>
+<path d="M346 140 H413 M350 136 H410" stroke="#1e1529" stroke-width="2"/>
+</svg>
