@@ -120,9 +120,9 @@ $('urlForm').onsubmit=e=>{e.preventDefault();action(async()=>{
  const url=$('url').value.trim(),parsed=new URL(url),host=parsed.hostname;
  if(!['https:','http:'].includes(parsed.protocol))throw Error('Нужна HTTP(S)-ссылка.');
  const platform=/(^|\.)(youtube\.com|youtu\.be|soundcloud\.com|on\.soundcloud\.com)$/.test(host);
- const local=['127.0.0.1','localhost'].includes(location.hostname),cloud=location.hostname.endsWith('.onrender.com');
+ const local=['127.0.0.1','localhost'].includes(location.hostname),cloud=location.hostname.endsWith('.onrender.com')||location.hostname.endsWith('.up.railway.app');
  if(platform||local){
-  if(platform&&!local&&!cloud&&!importApi){$('helpDialog').showModal();throw Error('Облачный сервер ещё не подключён. Нужен один бесплатный запуск Render — инструкция в справке.');}
+  if(platform&&!local&&!cloud&&!importApi){$('helpDialog').showModal();throw Error('Сервер импорта не настроен. Укажи его адрес в справке.');}
   const file=await importFromServer(local||cloud?'':importApi,url,notice);await addFile(file);
  }else{
   let response;try{response=await fetch(url,{signal:AbortSignal.timeout(60000)});}catch{throw Error('Ссылка не разрешает загрузку (CORS) или недоступна. Сохрани аудиофайл и выбери его на сайте.');}
